@@ -1,0 +1,25 @@
+name: Build
+
+on: push
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        env:
+            ### Redis
+            BROKER_URL: ${{ secrets.BROKER_URL }}
+            ### Database
+            DATABASE_USER: ${{ secrets.DATABASE_USER }}
+            DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+            DATABASE_PASS: ${{ secrets.DATABASE_PASS }}
+            DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+            DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Build
+              run: make
+            - name: Run Black
+              run: make lint
+            - name: Run Tests
+              run: make test

@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  core:
+    build:
+      target: development
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+    links:
+      - selenium
+  postgres:
+    image: postgres:11.2-alpine
+    container_name: postgres
+    restart: unless-stopped
+    volumes:
+        - pgdata:/var/lib/postgresql/data/
+    ports:
+        - 5432:5432
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:6379
+  selenium:
+    image: selenium/standalone-chrome-debug:3.7.1
+    ports:
+      - 4444:4444
+      - 5900:5900
+
+volumes:
+  pgdata:

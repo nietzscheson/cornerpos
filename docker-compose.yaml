@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  default-core: &default-core
+    build:
+      context: ./src
+      target: base
+    volumes:
+      - ./src:/core
+    working_dir: /core
+    environment: 
+      ### Redis
+      BROKER_URL: ${BROKER_URL}
+      ### Database
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_PASS: ${DATABASE_PASS}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PORT: ${DATABASE_PORT}
+  core:
+    <<: *default-core
+    container_name: core
+  celery:
+    <<: *default-core
+    container_name: celery
+    restart: always
+    command: celery -A core worker -l info --concurrency=10
+    depends_on: 
+      - core
