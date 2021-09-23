@@ -35,7 +35,7 @@ su:
 	docker-compose run --rm core python manage.py createsuperuser
 test:
 	docker-compose run --rm core coverage run --source="." manage.py test
-	# docker-compose run --rm core coverage report -m
+	docker-compose run --rm core coverage report -m
 shell:
 	docker-compose run --rm core python manage.py shell_plus --ipython
 	######### For Autoreload #########
