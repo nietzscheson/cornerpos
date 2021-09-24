@@ -15,3 +15,7 @@ COPY . .
 FROM base AS development
 
 CMD python manage.py runserver 0:8000
+
+FROM base as debug
+
+RUN pip3 install debugpy

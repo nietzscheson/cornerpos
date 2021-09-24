@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "django_extensions",
     "pos.apps.PosConfig",
 ]
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_currentuser.middleware.ThreadLocalUserMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -144,3 +146,5 @@ LOGGER = logging.getLogger(__name__)
 CELERY_LOGGER = get_task_logger(__name__)
 
 SLACK_API_TOKEN = env["SLACK_API_TOKEN"]
+
+SITE_ID = 1

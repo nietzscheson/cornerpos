@@ -7,6 +7,9 @@ from celery import shared_task
 from core.settings import SLACK_API_TOKEN
 from slack import WebClient
 from slack.errors import SlackApiError
+from django.contrib.sites.models import Site
+from pos.models import Menu
+from django.urls import reverse_lazy
 
 fake = Faker()
 
@@ -14,6 +17,9 @@ fake = Faker()
 @shared_task
 def slack_notification(id):
     client = WebClient(token=SLACK_API_TOKEN)
+    domain = Site.objects.get_current().domain
+    path = reverse_lazy("pos:detail", kwargs={"pk": id})
+    url = "http://{domain}{path}".format(domain=domain, path=path)
 
     try:
         client.chat_postMessage(
@@ -23,7 +29,7 @@ def slack_notification(id):
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": f"Hey! :wave: Check you our menu's options :cook: for today... {id}",
+                        "text": f"Hey! :wave: Check you our menu's options :cook: for today... {url}",
                     },
                 },
             ],

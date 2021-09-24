@@ -12,3 +12,4 @@ selenium==3.7.0
 ipdb==0.10.3
 django-selenium-login==2.0.0
 slackclient==2.9.3
+django-currentuser==0.5.3

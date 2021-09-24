@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table>
+    <tr>
+        <th>Menu</th>
+        <td>{{ menu.id }}</td>
+    </tr>
+    {% if order %}
+    <tr>
+        <th>Order</th>
+        <td>{{ order.id }}</td>
+    </tr>
+    {% endif %}
+</table>
+{% if order %}
+<h2 id="title">We're preparing your meal!</h2>
+{% else %}
+
+<h2> Hello! I share with you today's menu :)</h2>
+{% include "pos/menu_options.html" %}
+<h2> Have a nice day! </h2>  
+<hr/>
+    <a href="{% url "pos:order-create" menu_id=menu.id %}">Go to order</a> 
+<hr/>
+{% endif %}
+{% endblock %}
