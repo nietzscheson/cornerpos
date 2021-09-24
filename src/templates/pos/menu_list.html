@@ -20,7 +20,7 @@
         {% if latest_menu_list %}
         {% for menu in latest_menu_list %}
             <tr>
-                <td><a href="{% url 'pos:detail' menu.id %}">{{ menu.id }}</a></td>
+                <td><a href="{% url 'pos:update' menu.id %}">{{ menu.id }}</a></td>
                 <td>{{ menu.option_1 }}</td>
                 <td>{{ menu.option_2 }}</td>
 		        <td>{{ menu.option_3 }}</td>

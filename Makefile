@@ -51,4 +51,6 @@ format:
 lint:
 	docker-compose run --rm core black . --check
 loaddata:
-	docker-compose run --rm core python manage.py loaddata users
+	docker-compose run --rm core python manage.py loaddata users menus
+reset_celery:
+	docker-compose stop celery && docker-compose start celery
