@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if object %}
+<h1>Menu: {{ menu.id }}</h1>
+{% else %}
+<h1>Create Menu</h1>
+{% endif %}
+
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <a href="{% url 'pos:index' %}">Cancel</a>
+    <input type="submit" value="Save Menu">
+</form>
+{% endblock %}

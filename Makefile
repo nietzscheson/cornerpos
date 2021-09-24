@@ -50,3 +50,5 @@ format:
 	docker-compose run --rm core black .
 lint:
 	docker-compose run --rm core black . --check
+loaddata:
+	docker-compose run --rm core python manage.py loaddata users

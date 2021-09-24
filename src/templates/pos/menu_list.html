@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{% url 'pos:create' %}">Create Menu</a>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Option 1</th>
+            <th>Option 2</th>
+            <th>Option 3</th>
+	        <th>Option 4</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if latest_menu_list %}
+        {% for menu in latest_menu_list %}
+            <tr>
+                <td><a href="{% url 'pos:detail' menu.id %}">{{ menu.id }}</a></td>
+                <td>{{ menu.option_1 }}</td>
+                <td>{{ menu.option_2 }}</td>
+		        <td>{{ menu.option_3 }}</td>
+		        <td>{{ menu.option_4 }}</td>
+                <td>{{ menu.created_at }}</td>
+                <td>{{ menu.updated_at }}</td>
+            </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td>
+                <p>No menus are available.</p>
+            </td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}
