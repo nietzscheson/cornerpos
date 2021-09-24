@@ -30,7 +30,6 @@ class LoginTest(BaseTestCase):
         self.assertIn("Hi ana!", main_text)
         time.sleep(3)
 
-
     def test_login_failed(self):
         """
         As a user without credentials, I should trying
@@ -49,5 +48,8 @@ class LoginTest(BaseTestCase):
         self.assertEqual(reverse("login"), path)
 
         warning_text = self.selenium.find_element_by_class_name("errorlist").text
-        self.assertIn("Please enter a correct username and password. Note that both fields may be case-sensitive.", warning_text)
+        self.assertIn(
+            "Please enter a correct username and password. Note that both fields may be case-sensitive.",
+            warning_text,
+        )
         time.sleep(3)

@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+import logging
+from celery.utils.log import get_task_logger
 
 # Initialise environment variables
 env = os.environ
@@ -60,7 +61,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [str(BASE_DIR.joinpath('templates'))],
+        "DIRS": [str(BASE_DIR.joinpath("templates"))],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -134,5 +135,12 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
+
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+
+LOGGER = logging.getLogger(__name__)
+CELERY_LOGGER = get_task_logger(__name__)
+
+SLACK_API_TOKEN = env["SLACK_API_TOKEN"]

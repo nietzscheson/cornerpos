@@ -10,3 +10,5 @@ black==21.9b0
 coverage==5.5
 selenium==3.7.0
 ipdb==0.10.3
+django-selenium-login==2.0.0
+slackclient==2.9.3
