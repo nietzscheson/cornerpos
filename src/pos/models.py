@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.timezone import localdate
 from django.contrib.auth import get_user_model
 from django_currentuser.db.models import CurrentUserField
+from pos.validators import validate_date
 
 
 class ResourceModel(models.Model):
@@ -22,10 +23,7 @@ class Menu(ResourceModel):
     option_2 = models.CharField(max_length=100)
     option_3 = models.CharField(max_length=100)
     option_4 = models.CharField(max_length=100)
-    date_at = models.DateField()
-
-    def get_absolute_url(self):
-        return reverse("pos:detail", kwargs={"pk": self.pk})
+    date_at = models.DateField(validators=[validate_date])
 
 
 class Order(ResourceModel):
