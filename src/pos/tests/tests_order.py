@@ -6,13 +6,13 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from seleniumlogin import force_login
 from selenium.webdriver.support.ui import Select
-from pos.models import Menu
+from pos.models import Menu, Order
 
 
 from ._base import BaseTestCase
 
 
-class OrderTest(BaseTestCase):
+class OrderCreateTest(BaseTestCase):
     fixtures = ["users", "menus"]
 
     def test_order_create(self):
@@ -21,7 +21,7 @@ class OrderTest(BaseTestCase):
         access to create a order.
         """
         menu = Menu.objects.get()
-
+        
         self.selenium.get(
             "%s%s"
             % (self.live_server_url, reverse("pos:detail", kwargs={"pk": menu.id}))
@@ -65,3 +65,31 @@ class OrderTest(BaseTestCase):
         self.assertIn("We're preparing your meal!", title)
 
         time.sleep(3)
+
+class OrderCreatedTest(BaseTestCase):
+    fixtures = ["users", "menus", "orders"]
+
+    def test_order_created(self):
+        """
+        As a user with valid credentials, I should gain
+        access to create a order.
+        """
+        menu = Menu.objects.get()
+        order = Order.objects.get()
+
+        user = get_user_model().objects.filter(username="miguel").first()
+        force_login(user, self.selenium, self.live_server_url)
+        self.selenium.get(
+            "%s%s"
+            % (self.live_server_url, reverse("pos:detail", kwargs={"pk": menu.id}))
+        )
+        time.sleep(3)
+
+        menu_id = self.selenium.find_element_by_id("menu_id").text
+        self.assertIn(str(menu.id), menu_id)
+
+        order_id = self.selenium.find_element_by_id("order_id").text
+        self.assertIn(str(order.id), order_id)
+
+        title = self.selenium.find_element_by_id("title").text
+        self.assertIn("We're preparing your meal!", title)
