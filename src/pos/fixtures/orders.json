@@ -1,0 +1,1 @@
+[{"model": "pos.order", "pk": "81c54625-9472-4b3e-9687-a90aa0686f5b", "fields": {"created_at": "2021-09-25T15:47:41.707Z", "updated_at": "2021-09-25T15:47:41.707Z", "user": 2, "menu": "13dd0327-e0c2-4c6e-bb59-9b62a75ccbff", "option": "OPTION_3", "preference": "Without Salt!"}}]

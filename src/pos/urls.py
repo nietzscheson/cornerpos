@@ -6,6 +6,7 @@ app_name = "pos"
 
 urlpatterns = [
     path("menus/", views.IndexView.as_view(), name="index"),
+    path("orders/", views.OrderIndexView.as_view(), name="order-index"),
     path("menus/create/", views.CreateView.as_view(), name="create"),
     re_path(r"^menus/(?P<pk>[\w-]+)/$", views.UpdateView.as_view(), name="update"),
     re_path(

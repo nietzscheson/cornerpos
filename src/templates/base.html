@@ -13,7 +13,23 @@
       {% endfor %}
   </ul>
   {% endif %}
-    {% block content %}{% endblock %}
+  {% if user.is_authenticated %}
+  <p id="greeter">Hi {{ user.username }}!</a>
+  <nav>
+    <ul>
+      <li><a href="{% url "home" %}">Home</a></li>
+      {% if user.is_superuser %}
+      <li><a href="{% url "pos:index" %}">Menus</a></li>
+      <li><a href="{% url "pos:order-index" %}">Orders</a></li>
+      {% else %}
+      <li><a href="{% url "pos:order-index" %}">Your Orders</a></li>
+      {% endif %}
+      <hr>
+      <li><a href="{% url "logout" %}">Logout</a></li>
+    </ul>
+  </nav>
+  {% endif %}
+  {% block content %}{% endblock %}
   </main>
 </body>
 </html>
