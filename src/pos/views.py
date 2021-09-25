@@ -3,26 +3,34 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import DetailView
 from pos.models import Menu, Order
 from pos.forms import MenuForm, OrderForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from pos.task import slack_notification
 from core.settings import LOGGER
 from django.shortcuts import redirect
+from pos.mixins import SuperuserRequiredMixin
 
 
-class IndexView(LoginRequiredMixin, ListView):
+class IndexView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
     context_object_name = "latest_menu_list"
 
     def get_queryset(self):
         return Menu.objects.order_by("created_at")
 
 
+# @user_passes_test(lambda u: u.is_superuser)
+class OrderIndexView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
+    context_object_name = "latest_order_list"
+
+    def get_queryset(self):
+        return Order.objects.order_by("created_at")
+
+
 class OrderCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Order
     form_class = OrderForm
-    # success_url = reverse_lazy("pos:index")
     success_message = "Order was created successfully"
 
     def get_context_data(self, **kwargs):
@@ -42,7 +50,9 @@ class OrderCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return reverse_lazy("pos:detail", kwargs={"pk": self.kwargs["menu_id"]})
 
 
-class CreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class CreateView(
+    LoginRequiredMixin, SuperuserRequiredMixin, SuccessMessageMixin, CreateView
+):
     model = Menu
     form_class = MenuForm
     success_url = reverse_lazy("pos:index")
@@ -68,13 +78,14 @@ class DetailView(DetailView):
 
         context = super().get_context_data(**kwargs)
 
-        context["order"] = Order.objects.filter(
-            user=self.request.user, menu=self.kwargs["pk"]
-        ).first()
+        if not self.request.user.is_anonymous:
+            context["order"] = Order.objects.filter(
+                user=self.request.user, menu=self.kwargs["pk"]
+            ).first()
         return context
 
 
-class UpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateView(LoginRequiredMixin, SuperuserRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Menu
     form_class = MenuForm
     success_url = reverse_lazy("pos:index")
