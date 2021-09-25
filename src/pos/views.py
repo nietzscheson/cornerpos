@@ -1,15 +1,16 @@
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import DetailView
-from pos.models import Menu, Order
-from pos.forms import MenuForm, OrderForm
-from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from pos.task import slack_notification
-from core.settings import LOGGER
 from django.shortcuts import redirect
+
+from core.settings import LOGGER
+from pos.models import Menu, Order
+from pos.forms import MenuForm, OrderForm
+from pos.task import slack_notification
 from pos.mixins import SuperuserRequiredMixin
 
 
@@ -20,7 +21,6 @@ class IndexView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
         return Menu.objects.order_by("created_at")
 
 
-# @user_passes_test(lambda u: u.is_superuser)
 class OrderIndexView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
     context_object_name = "latest_order_list"
 
@@ -85,7 +85,9 @@ class DetailView(DetailView):
         return context
 
 
-class UpdateView(LoginRequiredMixin, SuperuserRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateView(
+    LoginRequiredMixin, SuperuserRequiredMixin, SuccessMessageMixin, UpdateView
+):
     model = Menu
     form_class = MenuForm
     success_url = reverse_lazy("pos:index")

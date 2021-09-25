@@ -1,15 +1,14 @@
 import time
 from datetime import datetime, date, timedelta
-
-from urllib.parse import urlparse
-from django.contrib.auth import get_user_model
-from django.urls import reverse
 from seleniumlogin import force_login
 from selenium.webdriver.support.ui import Select
+from urllib.parse import urlparse
+
+from django.contrib.auth import get_user_model
+from django.urls import reverse
+
 from pos.models import Menu, Order
-
-
-from ._base import BaseTestCase
+from pos.tests._base import BaseTestCase
 
 
 class OrderCreateTest(BaseTestCase):
@@ -21,7 +20,7 @@ class OrderCreateTest(BaseTestCase):
         access to create a order.
         """
         menu = Menu.objects.get()
-        
+
         self.selenium.get(
             "%s%s"
             % (self.live_server_url, reverse("pos:detail", kwargs={"pk": menu.id}))
@@ -66,6 +65,7 @@ class OrderCreateTest(BaseTestCase):
 
         time.sleep(3)
 
+
 class OrderCreatedTest(BaseTestCase):
     fixtures = ["users", "menus", "orders"]
 
@@ -93,3 +93,30 @@ class OrderCreatedTest(BaseTestCase):
 
         title = self.selenium.find_element_by_id("title").text
         self.assertIn("We're preparing your meal!", title)
+
+        time.sleep(3)
+
+
+class OrderDontAccessTest(BaseTestCase):
+    fixtures = ["users", "menus", "orders"]
+
+    def test_order_dont_access(self):
+        """
+        As a user with valid credentials, I should no gain
+        access to list system orders.
+        """
+
+        user = get_user_model().objects.filter(username="miguel").first()
+        force_login(user, self.selenium, self.live_server_url)
+        self.selenium.get("%s%s" % (self.live_server_url, reverse("pos:index")))
+        time.sleep(3)
+
+        warning_text = self.selenium.find_element_by_class_name("warning").text
+        self.assertIn(
+            ":( Sorry! You do not have permissions to view this resource", warning_text
+        )
+
+        home_path = urlparse(self.selenium.current_url).path
+        self.assertEqual(reverse("home"), home_path)
+
+        time.sleep(3)

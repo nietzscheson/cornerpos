@@ -3,7 +3,7 @@ import time
 from urllib.parse import urlparse
 from django.urls import reverse
 
-from ._base import BaseTestCase
+from pos.tests._base import BaseTestCase
 
 
 class LoginTest(BaseTestCase):
