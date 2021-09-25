@@ -63,5 +63,8 @@ If you love the automation testing, please run:
 ```bash
 $ make test
 ```
-This project is configured with a Selenium node. If you want to look how interact with a browser please use your prefer viewer. We recomended [VCN](https://www.realvnc.com/es/connect/download/viewer/) and connect with localhost:5900 | password
+This project is configured with a Selenium node. If you want to look how interact with a browser please use your prefer viewer. We recomended [VCN](https://www.realvnc.com/es/connect/download/viewer/) and connect with localhost:5900 | password:
+
+https://user-images.githubusercontent.com/1699198/134784450-07904c0b-d91b-46aa-b4f2-e709d7eab9cd.mp4
+
 ___
