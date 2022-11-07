@@ -16,3 +16,4 @@ htmlcov/
 _*/
 .env*
 !.env.dist
+*.sqlite3

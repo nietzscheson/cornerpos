@@ -6,18 +6,8 @@ services:
       target: development
     ports:
       - 8000:8000
-    depends_on:
-      - postgres
     links:
       - selenium
-  postgres:
-    image: postgres:13.2-alpine
-    container_name: postgres
-    restart: unless-stopped
-    ports:
-        - 5432:5432
-    environment:
-        POSTGRES_PASSWORD: ${DATABASE_PASS}
   redis:
     image: redis:alpine
     container_name: redis
