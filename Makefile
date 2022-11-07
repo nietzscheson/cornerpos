@@ -1,6 +1,6 @@
-.PHONY: init 
+.PHONY: init
 
-init: 
+init:
 	@make down
 	@make up
 	@make ps
@@ -12,8 +12,8 @@ pull:
 	docker-compose pull
 build:
 	docker-compose build
-up: 
-	make pull 
+up:
+	make pull
 	make build
 	docker-compose up -d
 ps:
@@ -22,7 +22,7 @@ logs:
 	docker-compose logs core
 migrations:
 	docker-compose run --rm core python manage.py makemigrations
-migrate: 
+migrate:
 	@make migrations
 	docker-compose run --rm core python manage.py migrate
 fixtures:
@@ -34,8 +34,9 @@ reset_db:
 su:
 	docker-compose run --rm core python manage.py createsuperuser
 test:
-	docker-compose run --rm core coverage run --source="." manage.py test
-	docker-compose run --rm core coverage report -m
+	# docker-compose run --rm core coverage run --source="." manage.py test
+	# docker-compose run --rm core coverage report -m
+	docker-compose run --rm core pytest
 shell:
 	docker-compose run --rm core python manage.py shell_plus --ipython
 	######### For Autoreload #########
@@ -54,3 +55,4 @@ loaddata:
 	docker-compose run --rm core python manage.py loaddata users menus orders
 reset_celery:
 	docker-compose stop celery && docker-compose start celery
+
