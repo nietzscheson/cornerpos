@@ -13,3 +13,6 @@ ipdb==0.13.9
 django-selenium-login==2.0.0
 slackclient==2.9.4
 django-currentuser==0.5.3
+pytest-xdist==3.0.2
+pytest-django==4.5.2
+pytest-selenium==4.0.0

@@ -144,3 +144,7 @@ CELERY_LOGGER = get_task_logger(__name__)
 SLACK_API_TOKEN = env["SLACK_API_TOKEN"]
 
 SITE_ID = 1
+
+import socket
+
+os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = socket.gethostbyname(socket.gethostname())
