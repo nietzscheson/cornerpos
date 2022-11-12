@@ -1,16 +1,16 @@
 Cornershop Backend Challenge Test
 ==============
 
-This is a Docker (with docker-compose) environment for Cornershop Backend Test development.
+This is a Docker (with docker-compose) environment for Cornerpos development.
 
-[![Build Status](https://github.com/nietzscheson/cornershop-backend-test/workflows/Build/badge.svg)](https://github.com/nietzscheson/cornershop-backend-test/actions)
+[![Build Status](https://github.com/nietzscheson/cornerpos/workflows/Build/badge.svg)](https://github.com/nietzscheson/cornerpos/actions)
 
 # Installation
 
 1. First, clone this repository:
 
 ```bash
-$ git clone https://github.com/nietzscheson/cornershop-backend-test
+$ git clone https://github.com/nietzscheson/cornerpos
 ```
 
 2. Copy the environment vars:
@@ -37,14 +37,12 @@ This results in the following running containers:
 
 ```bash
 > $ docker-compose ps
-                 Name                               Command               State                                          Ports
----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-celery                                   celery -A core worker -l i ...   Up
-core                                     /bin/sh -c python manage.p ...   Up       0.0.0.0:8000->8000/tcp,:::8000->8000/tcp
-cornershop-backend-test_default-core_1   python3                          Exit 0
-cornershop-backend-test_selenium_1       /opt/bin/entry_point.sh          Up       0.0.0.0:4444->4444/tcp,:::4444->4444/tcp, 0.0.0.0:5900->5900/tcp,:::5900->5900/tcp
-postgres                                 docker-entrypoint.sh postgres    Up       0.0.0.0:5432->5432/tcp,:::5432->5432/tcp
-redis                                    docker-entrypoint.sh redis ...   Up       0.0.0.0:6379->6379/tcp,:::6379->6379/tcp
+NAME                       COMMAND                  SERVICE             STATUS              PORTS
+celery                     "celery -A core work…"   celery              running
+core                       "/bin/sh -c 'python …"   core                running             0.0.0.0:8000->8000/tcp
+cornerpos-default-core-1   "python3"                default-core        exited (0)
+cornerpos-selenium-1       "/opt/bin/entry_poin…"   selenium            running             0.0.0.0:4444->4444/tcp, 0.0.0.0:5900->5900/tcp
+redis                      "docker-entrypoint.s…"   redis               running             0.0.0.0:6379->6379/tcp
 ```
 *The POS Application can be accessed from: [localhost:8000](http://localhost:8000)*
 ___
@@ -63,7 +61,7 @@ If you love the automation testing, please run:
 ```bash
 $ make test
 ```
-This project is configured with a Selenium node. If you want to look how interact with a browser please use your prefer viewer. We recomended [VCN](https://www.realvnc.com/es/connect/download/viewer/) and connect with localhost:5900 | password:
+This project is configured with a Selenium node. If you want to look how interact with a browser please use your prefer viewer. We recomended [VNC](https://www.realvnc.com/es/connect/download/viewer/) and connect with localhost:5900 | password:
 
 https://user-images.githubusercontent.com/1699198/134784450-07904c0b-d91b-46aa-b4f2-e709d7eab9cd.mp4
 ___
