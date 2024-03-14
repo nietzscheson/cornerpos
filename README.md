@@ -1,7 +1,7 @@
 Cornerpos Backend Challenge Test
 ==============
 
-This is a Docker (with docker-compose) environment for Cornershop Backend Test development.
+This is a Docker (with docker-compose) environment for Cornerpos Backend Test development.
 
 [![Build Status](https://github.com/nietzscheson/cornershop-backend-test/workflows/Build/badge.svg)](https://github.com/nietzscheson/cornershop-backend-test/actions)
 
