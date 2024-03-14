@@ -1,4 +1,4 @@
-Cornershop Backend Challenge Test
+Cornerpos Backend Challenge Test
 ==============
 
 This is a Docker (with docker-compose) environment for Cornershop Backend Test development.
